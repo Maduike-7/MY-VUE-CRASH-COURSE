@@ -1,30 +1,37 @@
 <template>
   <div class="container">
-    <Header title="Task Tracker" />
-    <Tasks :tasks="tasks"  />
+    <Header title="Task Tracker"/>
+    <Tasks @delete-task="deleteTask" :tasks="tasks" />
   </div>
 </template>
 
 <script>
 import Header from './components/Header'
 import Tasks from './components/Tasks'
-import Test from './components/Test'
 
 export default {
   name: 'App',
   components: {
     Header,
-    Tasks,
-    Test
+    Tasks
   },
 
   data() {
     return{
-      tasks: []
+      tasks: [],
     }
   },
 
+  methods: {
+    deleteTask(id) {
+      if (confirm('Are you sure')) { 
+      this.tasks = this.tasks.filter((task) => task.id !== id)
+    }
+    },
+  } ,
+
 created() {
+
   this.tasks = [
 {
   id: 1,
@@ -32,14 +39,21 @@ created() {
   day: 'March 1sr at 2:30pm',
   reminder: true,
   },
+
   {
   id: 2,
-  text: 'Meeting at School',
+  text:'Meeting at School',
   day: 'March 3rd at 1:30pm',
   reminder: true,
   },
   {
   id: 3,
+  text: 'Food Shopping',
+  day: 'March 2rd at 11:00am',
+  reminder: false,
+},
+{
+id: 4,
   text: 'Food Shopping',
   day: 'March 2rd at 11:00am',
   reminder: false,
@@ -89,6 +103,10 @@ body {
 .btn-block {
   display: block;
   width: 100%;
+}
+
+ #text {
+  color: red;
 }
 
 </style>
